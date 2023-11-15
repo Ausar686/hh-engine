@@ -12,7 +12,7 @@ class Reporter:
         # GPT attributes
         self.model = kwargs.get("model", None)
         self.temperature = kwargs.get("temperature", 0)
-        self.gpt = QAGPT(model=self.model, temperature=self.temperature)
+        self.gpt = QAGPT(model=self.model, temperature=self.temperature, key = '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')
         self.n_retries = kwargs.get("n_retries", 5)
         # Q/A flow attributes
         self.topic = None
@@ -86,6 +86,11 @@ Provide your answer (except for sections' names) in Russian Language.
         self.answers.append(answer)
         return answer
     
+    # Debug
+    def get_answer_from_list(self, from_list_answers) -> str:
+        answer = from_list_answers
+        self.answers.append(answer)
+        return answer
     
     def get_followup_prompt(
         self,
@@ -129,6 +134,8 @@ Provide your answer (except for sections' names) in Russian Language.
     
     
     def _get_followup(self) -> str:
+        print(self.questions)
+        print(self.answers)
         prompt = self.get_followup_prompt(self.questions, self.criterias, self.answers)
         raw_followup = self.gpt.run(prompt)
         return raw_followup
@@ -175,6 +182,24 @@ Provide your answer (except for sections' names) in Russian Language.
         while not self.verdict:
             question = self.display_question()
             answer = self.get_answer()
+            if not answer:
+                break
+            followup = self.get_followup()
+        print("Discussion completed") # Remove this later; for debug purposes only
+        return
+    
+    def runy(self, topic: str, criterias: List[str], list_answers) -> None:
+        self.get_question(topic, criterias)
+        i = 0
+        # print(len(list_answers[i]))
+        while not self.verdict:
+            print(i)
+            if i>=len(list_answers):
+                break
+            question = self.display_question()
+            print("list_answers[i]", list_answers[i])
+            answer = self.get_answer_from_list(list_answers[i])
+            i += 1
             if not answer:
                 break
             followup = self.get_followup()
