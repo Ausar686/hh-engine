@@ -12,7 +12,7 @@ class Reporter:
         # GPT attributes
         self.model = kwargs.get("model", None)
         self.temperature = kwargs.get("temperature", 0)
-        self.gpt = QAGPT(model=self.model, temperature=self.temperature, key = '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')
+        self.gpt = QAGPT(model=self.model, temperature=self.temperature, key = 'xx-xxxxx')
         self.n_retries = kwargs.get("n_retries", 5)
         # Q/A flow attributes
         self.topic = None
@@ -194,12 +194,13 @@ Provide your answer (except for sections' names) in Russian Language.
         # print(len(list_answers[i]))
         while not self.verdict:
             print(i)
-            if i>=len(list_answers):
-                break
             question = self.display_question()
             print("list_answers[i]", list_answers[i])
             answer = self.get_answer_from_list(list_answers[i])
             i += 1
+            print("Hmm")
+            if i>=len(list_answers):
+                break
             if not answer:
                 break
             followup = self.get_followup()

@@ -1,3 +1,5 @@
+import json
+
 from reporter import Reporter
 from block_2 import Block_2
 
@@ -28,5 +30,7 @@ print(block_2.answers_to_json(reporter.topic, reporter.criterias, reporter.answe
 while True:
     print("block_2.check_answer_check")
     if block_2.check_answer_check() == "Yes":
-        print("Sucсess")
+        print(block_2.save_answer_json())
         break
+    else:
+        print(block_2.answer_check)
